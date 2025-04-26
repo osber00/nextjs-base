@@ -32,11 +32,20 @@ export function LoginForm({
   })
 
   const onSubmit = async (data: z.infer<typeof LoginSchema>) => {
-    console.log(data)
+    //console.log(data)
   
-    signIn("credentials", data)
-   
+    const respuesta = await signIn("credentials", {
+      email: data.email,
+      password: data.password,
+      redirect: false,
+    })
 
+    if (respuesta?.error) {
+      console.log(respuesta.error)
+    }
+    if (respuesta?.ok) {
+      console.log("Login exitoso")
+    }
   }
 
   return (

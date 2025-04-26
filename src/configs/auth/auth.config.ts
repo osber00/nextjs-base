@@ -9,7 +9,7 @@ export default {
                 console.log(credentials)
 
                 if (credentials?.email !== "hola@test.com") {
-                    throw new Error("Invalid credentials")
+                    throw new Error("Credenciales inválidas")
                 }
 
                 return {
