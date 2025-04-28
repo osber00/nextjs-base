@@ -16,8 +16,7 @@ import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { LoginSchema } from "@/configs/zod/zod"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
-
-import { signIn } from "next-auth/react"
+import { LoginAction } from "@/actions/login-action"
 
 export function LoginForm({
   className,
@@ -33,19 +32,15 @@ export function LoginForm({
 
   const onSubmit = async (data: z.infer<typeof LoginSchema>) => {
     //console.log(data)
-  
-    const respuesta = await signIn("credentials", {
-      email: data.email,
-      password: data.password,
-      redirect: false,
-    })
-
-    if (respuesta?.error) {
-      console.log(respuesta.error)
-    }
-    if (respuesta?.ok) {
+    const response = await LoginAction(data)
+    if (response.error) {
+      console.log(response.error)
+    } else {
       console.log("Login exitoso")
+      // Aquí puedes redirigir al usuario a otra página o mostrar un mensaje de éxito
     }
+    //console.log("Login exitoso")
+    
   }
 
   return (
